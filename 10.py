@@ -1,5 +1,9 @@
+import json
 import pathlib
 import pickle
+import json
+import yaml
+
 
 
 
@@ -33,12 +37,39 @@ with open('draft.txt', 'r') as fileread:
 
 
 #2 Сериализовать объект простого класса, загрузить его и запустить метод, использующий аттрибут объекта, при помощи pickle
-file_picle = pathlib.Path('for_pickle.txt')
-with file_picle.open('wb') as fp:
+file_pickle = pathlib.Path('for_pickle.txt')
+with file_pickle.open('wb') as fp:
     pickle.dump(cars, fp)
 
-with file_picle.open('rb') as fp:
+with file_pickle.open('rb') as fp:
     loaded_data = pickle.load(fp)
     print (loaded_data ['sedan'])
 
+#3 JSON и YAML
+#3.1 JSON "dumps"
+
+i_am = {
+    "firstName": 'Alexander',
+    "lastName": 'Shotc',
+    "Age": 27,
+    "hobbies": ["programming", "crossfit", "travaling"]
+}
+my_wife = {
+    "firstName": 'Darya',
+    "lastName": 'Shmakova',
+    "Age": 26,
+    "hobbies": ["reading", "music", "travaling"]
+}
+
+a = json.dumps(i_am, indent= 4, sort_keys= True)
+c = json.loads (a)
+print (c)
+#3.2 YAML "dump"
+file_yaml = pathlib.Path('Ytest.yaml')
+with file_yaml.open('w') as fy:
+    yaml.dump (my_wife, fy)
+
+with file_yaml.open('r') as fpy:
+    print (fpy.read ())
+    print (yaml.load ())
 
