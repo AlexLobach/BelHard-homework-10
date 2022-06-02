@@ -1,8 +1,10 @@
+from ctypes import Union
 import json
 import pathlib
 import pickle
 import json
 import yaml
+from pydantic import BaseModel
 
 
 
@@ -64,6 +66,7 @@ my_wife = {
 a = json.dumps(i_am, indent= 4, sort_keys= True)
 c = json.loads (a)
 print (c)
+
 #3.2 YAML "dump"
 file_yaml = pathlib.Path('Ytest.yaml')
 with file_yaml.open('w') as fy:
@@ -71,5 +74,31 @@ with file_yaml.open('w') as fy:
 
 with file_yaml.open('r') as fpy:
     print (fpy.read ())
-    print (yaml.load ())
+    #print (yaml.load ())
 
+
+
+#4 PYDANTIC
+data = {
+    "age" : 45,
+    "name" : "Peter",
+    "children" : [
+        {
+            "age_c" : 3,
+            "name_c": "Alice"
+        }
+    ],
+    "married" : True,
+    "city" : "Minsk"
+}
+
+class Family(BaseModel):
+    age : int
+    name : str
+    children : list = None
+    married : bool
+    city : str = None
+
+f = Family (**data)
+
+print (f)
