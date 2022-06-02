@@ -86,19 +86,32 @@ data = {
         {
             "age_c" : 3,
             "name_c": "Alice"
+        },
+        {
+            "age_c" : 5,
+            "name_c": "Mike"
         }
     ],
     "married" : True,
     "city" : "Minsk"
 }
+class Children(BaseModel):
+    age_c : int
+    name_c : str
 
 class Family(BaseModel):
     age : int
     name : str
-    children : list = None
+    children : list[Children] = None
     married : bool
     city : str = None
 
 f = Family (**data)
 
-print (f)
+file_pydantic = pathlib.Path('Pydantic.json')
+with file_pydantic.open('w') as fpyd:
+    json.dump (data, fpyd)
+
+with file_pydantic.open('r') as fpyd:
+    print (fpyd.read ())
+
